@@ -14,7 +14,7 @@ I've recently been enamoured with running regular servers inside AWS Lambda:
 - Create a Dockerfile for it.
 - Add a splash of AWS Lambda Web Adapter (literally one line of code):
   - It's great, I mean, look at it: https://github.com/awslabs/aws-lambda-web-adapter
-- Deploy it.
+- Deploy it. Or, you know, run it locally.
 
 Now, running it as a server has all the usual benefits of actually accessing it
 through HTTP, locally and through some sort of ingress (Lambda URL etc.).
