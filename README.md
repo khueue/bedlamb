@@ -44,15 +44,7 @@ ingress. Fewer ingresses, fewer problems. Access is restricted through IAM.
 
 I might even make it behave like a drop-in replacement for curl.
 
-## Features
-
-- Invoke AWS Lambda functions with API Gateway proxy request format
-- Support for custom HTTP methods, paths, headers, query parameters, and request body
-- curl-like interface for ease of use
-- Uses AWS SDK Go v2 with standard credential providers
-
 ## Installation
-
 
 Clone it and build it (you need Go):
 
