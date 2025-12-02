@@ -4,7 +4,7 @@
 
 **TL;DR:** Kinda like curl, but for AWS Lambdas.
 
-**NOTE: WORK IN PROGRESS.**
+**NOTE: WORK IN PROGRESS. This is basically a first draft.**
 
 ## Why?
 
