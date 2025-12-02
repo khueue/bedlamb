@@ -27,10 +27,10 @@ an *API Gateway* event. So:
 - **Bedlamb simply wraps your HTTP ambitions in an API Gateway event before
 invoking your lambda using the AWS SDK**.
 
-For example:
+Have a look-see:
 
 ```sh
-$ bin/bedlamb \
+bin/bedlamb \
     --path /health \
     arn:aws:lambda:us-east-1:123456789012:function:my-function
 {"status": "ok"}
@@ -117,4 +117,4 @@ bedlamb \
 
 ## AWS Credentials
 
-The tool uses the AWS SDK's default credential chain, so fix your credentials. You will get a permission denied error from IAM if don't have access to invoke it.
+The tool uses the AWS SDK's default credential chain, so fix your credentials. You will get a permission denied error from IAM if don't have access to invoke the Lambda.
