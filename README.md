@@ -27,12 +27,13 @@ an *API Gateway* event. So:
 - **Bedlamb simply wraps your HTTP ambitions in an API Gateway event before
 invoking your lambda using the AWS SDK**.
 
-Like this:
+For example:
 
-```
-bin/bedlamb \
-  --path /health \
-  arn:aws:lambda:us-east-1:123456789012:function:my-function
+```sh
+$ bin/bedlamb \
+    --path /health \
+    arn:aws:lambda:us-east-1:123456789012:function:my-function
+{"status": "ok"}
 ```
 
 Once again: *why?*

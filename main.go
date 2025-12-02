@@ -38,6 +38,13 @@ type RequestContext struct {
 	Path       string `json:"path"`
 }
 
+// APIGatewayProxyResponse represents an API Gateway proxy response
+type APIGatewayProxyResponse struct {
+	StatusCode int               `json:"statusCode"`
+	Headers    map[string]string `json:"headers,omitempty"`
+	Body       string            `json:"body"`
+}
+
 func main() {
 	// Define CLI flags with both short and long forms
 	method := pflag.StringP("method", "X", "GET", "HTTP method")
@@ -158,16 +165,24 @@ func main() {
 		os.Exit(1)
 	}
 
-	if *verbose {
-		fmt.Fprintf(os.Stderr, "Status code: %d\n", result.StatusCode)
-		fmt.Fprintf(os.Stderr, "Response:\n")
+	// Parse API Gateway response to extract body
+	var apiResponse APIGatewayProxyResponse
+	if err := json.Unmarshal(result.Payload, &apiResponse); err != nil {
+		// If it's not a valid API Gateway response, just print raw payload
+		if *verbose {
+			fmt.Fprintf(os.Stderr, "Status code: %d\n", result.StatusCode)
+			fmt.Fprintf(os.Stderr, "Response (raw):\n")
+		}
+		fmt.Println(string(result.Payload))
+		return
 	}
 
-	var prettyResponse bytes.Buffer
-	if err := json.Indent(&prettyResponse, result.Payload, "", "  "); err != nil {
-		// If it's not valid JSON, just print as-is
-		fmt.Println(string(result.Payload))
-	} else {
-		fmt.Println(prettyResponse.String())
+	if *verbose {
+		fmt.Fprintf(os.Stderr, "Lambda status code: %d\n", result.StatusCode)
+		fmt.Fprintf(os.Stderr, "API Gateway status code: %d\n", apiResponse.StatusCode)
+		fmt.Fprintf(os.Stderr, "Response body:\n")
 	}
+
+	// Output just the body
+	fmt.Println(apiResponse.Body)
 }
