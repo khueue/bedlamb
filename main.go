@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/spf13/pflag"
 	"fmt"
+	"github.com/spf13/pflag"
 	"os"
 	"strings"
 
@@ -14,6 +14,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/lambda/types"
 	"github.com/google/uuid"
 )
+
+// version is set via ldflags at build time
+var version = "dev"
 
 // APIGatewayProxyRequest represents an API Gateway proxy request event
 // {"rawPath":"/health","requestContext":{"http":{"method":"GET"}},"isBase64Encoded":false}
@@ -43,6 +46,7 @@ func main() {
 	data := pflag.StringP("data", "d", "", "Request body data")
 	query := pflag.StringP("query", "q", "", "Query string parameters in format 'key1=value1,key2=value2'")
 	verbose := pflag.BoolP("verbose", "v", false, "Verbose output")
+	showVersion := pflag.Bool("version", false, "Show version and exit")
 
 	pflag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage: %s [options] <lambda-arn>\n\n", os.Args[0])
@@ -53,6 +57,12 @@ func main() {
 	}
 
 	pflag.Parse()
+
+	// Show version and exit if requested
+	if *showVersion {
+		fmt.Println(version)
+		os.Exit(0)
+	}
 
 	// Check if Lambda ARN is provided
 	if pflag.NArg() < 1 {
@@ -86,7 +96,7 @@ func main() {
 	}
 
 	// Create API Gateway proxy request
-	requestID := fmt.Sprintf("bedlamb-%s", uuid.New().String())
+	requestID := fmt.Sprintf("bedlamb-%s-%s", version, uuid.New().String())
 	request := APIGatewayProxyRequest{
 		HTTPMethod:            strings.ToUpper(*method),
 		Path:                  *path,
