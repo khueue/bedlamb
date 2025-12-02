@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="img/logo.png" alt="Bedlamb logo" width="200"/>
+  <img src="img/logo.original.png" alt="Bedlamb logo" width="200"/>
 </p>
 
 **TL;DR:** Kinda like curl, but for AWS Lambdas.
